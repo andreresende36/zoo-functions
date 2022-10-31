@@ -1,20 +1,5 @@
 const data = require('../data/zoo_data');
 
-//   return ids.forEach((id) => {
-//     if (curr.id === id) {
-//       acc.push(curr);
-//       console.log(`Id: ${id}`);
-//       console.log(`Curr: ${curr}`);
-//       console.log(`Acc: ${acc}`);
-//       return acc;
-//     }
-//     console.log(`Id: ${id}`);
-//     console.log(`Curr: ${curr}`);
-//     console.log(`Acc: ${acc}`);
-//     return acc;
-//   });
-// }, []);
-
 function getSpeciesByIds(...ids) {
   return data.species.reduce((acc, curr) => {
     if (ids.includes(curr.id)) {
