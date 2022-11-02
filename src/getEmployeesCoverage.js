@@ -4,11 +4,9 @@ const { species, employees } = data;
 
 const employeesId = employees.map((element) => element.id);
 
-function checkName(object) {
+function checkValue(object) {
   const value = Object.values(object)[0];
-  if (!employees.some((e) => e.id === value || e.firstName === value || e.lastName === value)) {
-    throw new Error('Informações inválidas');
-  }
+  return employees.some((e) => e.id === value || e.firstName === value || e.lastName === value);
 }
 
 function getEmployeesCoverage(object) {
@@ -18,20 +16,17 @@ function getEmployeesCoverage(object) {
       return acc;
     }, []);
   }
-  try {
-    checkName(object);
-    const employee = employees.find((e) => (Object.values(e).includes(Object.values(object)[0])));
-    const speciesName = employee.responsibleFor.map((id) => species.find((e) => e.id === id).name);
-    const local = employee.responsibleFor.map((id) => species.find((e) => e.id === id).location);
-    return {
-      id: employee.id,
-      fullName: `${employee.firstName} ${employee.lastName}`,
-      species: speciesName,
-      locations: local,
-    };
-  } catch (error) { return error.message; }
-}
+  if (!checkValue(object)) { throw new Error('Informações inválidas'); }
 
-console.log(getEmployeesCoverage({ id: 'Id inválido' }));
+  const employee = employees.find((e) => (Object.values(e).includes(Object.values(object)[0])));
+  const speciesName = employee.responsibleFor.map((id) => species.find((e) => e.id === id).name);
+  const local = employee.responsibleFor.map((id) => species.find((e) => e.id === id).location);
+  return {
+    id: employee.id,
+    fullName: `${employee.firstName} ${employee.lastName}`,
+    species: speciesName,
+    locations: local,
+  };
+}
 
 module.exports = getEmployeesCoverage;
